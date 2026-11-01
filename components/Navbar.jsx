@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import toast from "react-hot-toast";
 import Logo from "./Logo";
-
-const user = null;
+import { authClient } from "@/lib/auth-client";
 
 const publicLinks = [
   { label: "Home", href: "/" },
@@ -22,7 +22,13 @@ const privateLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  // Real login state from BetterAuth
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user ?? null;
+
   const links = user ? [...publicLinks, ...privateLinks] : publicLinks;
 
   // The active page gets a gold pill
@@ -32,6 +38,24 @@ export default function Navbar() {
         ? "bg-primary text-primary-content"
         : "hover:bg-base-content/10"
     }`;
+
+  // Close the avatar dropdown after choosing an item
+  function closeDropdown() {
+    document.activeElement?.blur();
+  }
+
+  async function handleLogout() {
+    closeDropdown();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("You have been logged out.");
+          router.push("/");
+          router.refresh();
+        },
+      },
+    });
+  }
 
   return (
     <motion.header
@@ -55,16 +79,24 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
-          {user ? (
+          {isPending ? (
+            // Still checking the session: show a placeholder
+            <div className="h-10 w-28 animate-pulse rounded-full bg-base-content/10" />
+          ) : user ? (
             // Logged in: photo with dropdown
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="avatar cursor-pointer">
                 <div className="h-10 w-10 rounded-full ring-2 ring-primary">
-                  {user.photo ? (
-                    <img src={user.photo} alt={user.name} />
+                  {user.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                      referrerPolicy="no-referrer"
+                    />
                   ) : (
                     <span className="flex h-full w-full items-center justify-center bg-secondary font-semibold">
-                      {user.name[0]}
+                      {user.name?.[0]?.toUpperCase()}
                     </span>
                   )}
                 </div>
@@ -75,10 +107,14 @@ export default function Navbar() {
               >
                 <li className="menu-title text-base-content">{user.name}</li>
                 <li>
-                  <Link href="/profile">My Profile</Link>
+                  <Link href="/profile" onClick={closeDropdown}>
+                    My Profile
+                  </Link>
                 </li>
                 <li>
-                  <button type="button">Logout</button>
+                  <button type="button" onClick={handleLogout}>
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>
@@ -148,7 +184,7 @@ export default function Navbar() {
                 </li>
               ))}
             </ul>
-            {!user && (
+            {!isPending && !user && (
               <div className="mt-3 flex gap-2 sm:hidden">
                 <Link
                   href="/login"
