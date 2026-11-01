@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import HeroSlider from "@/components/HeroSlider";
+import NewArrivals from "@/components/NewArrivals";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       >
         <HeroSlider />
       </Suspense>
+      <NewArrivals />
     </div>
   );
 }
