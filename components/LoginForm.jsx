@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
+import GoogleButton from "./GoogleButton";
 
 // Only allow redirects to pages inside our own site (stops fake links)
 function safeRedirect(url) {
@@ -108,6 +109,9 @@ export default function LoginForm() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <div className="divider my-6 text-xs opacity-70">OR</div>
+        <GoogleButton callbackUrl={callbackUrl} />
 
         <p className="mt-6 text-center text-sm opacity-80">
           New to BookNook?{" "}

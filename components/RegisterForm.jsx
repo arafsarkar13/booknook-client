@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
+import GoogleButton from "./GoogleButton";
 
 // Returns an error message, or "" when the password is fine
 function checkPassword(password) {
@@ -155,6 +156,9 @@ export default function RegisterForm() {
             {loading ? "Creating account..." : "Register"}
           </button>
         </form>
+
+        <div className="divider my-6 text-xs opacity-70">OR</div>
+        <GoogleButton callbackUrl={callbackUrl} />
 
         <p className="mt-6 text-center text-sm opacity-80">
           Already have an account?{" "}
