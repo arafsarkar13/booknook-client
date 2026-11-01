@@ -1,26 +1,124 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------- DaisyUI themes: navy + gold ---------- */
+@plugin "daisyui" {
+  themes:
+    booknook-dark --default,
+    booknook-light;
 }
 
+@plugin "daisyui/theme" {
+  name: "booknook-dark";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #0a1128;
+  --color-base-200: #0f1a3a;
+  --color-base-300: #16224b;
+  --color-base-content: #f3f1ea;
+  --color-primary: #d4af37;
+  --color-primary-content: #1a1405;
+  --color-secondary: #1b2a5c;
+  --color-secondary-content: #f3f1ea;
+  --color-accent: #f3d77a;
+  --color-accent-content: #1a1405;
+  --color-neutral: #111c3f;
+  --color-neutral-content: #f3f1ea;
+  --color-info: #5aa9e6;
+  --color-success: #3ecf8e;
+  --color-warning: #f5b942;
+  --color-error: #ef5b5b;
+  --radius-selector: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
+  --border: 1px;
+}
+
+@plugin "daisyui/theme" {
+  name: "booknook-light";
+  color-scheme: light;
+  --color-base-100: #f7f4ec;
+  --color-base-200: #efe9da;
+  --color-base-300: #e4dcc5;
+  --color-base-content: #0a1128;
+  --color-primary: #b8921f;
+  --color-primary-content: #ffffff;
+  --color-secondary: #0a1128;
+  --color-secondary-content: #f7f4ec;
+  --color-accent: #d4af37;
+  --color-accent-content: #1a1405;
+  --color-neutral: #1b2a5c;
+  --color-neutral-content: #f7f4ec;
+  --color-info: #2f7fc1;
+  --color-success: #1f9d68;
+  --color-warning: #c98a12;
+  --color-error: #d64545;
+  --radius-selector: 1rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
+  --border: 1px;
+}
+
+/* ---------- Fonts ---------- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-playfair), serif;
 }
 
+/* ---------- Page background ---------- */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  background:
+    radial-gradient(
+      1000px 500px at 10% -10%,
+      color-mix(in oklab, var(--color-secondary) 70%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 450px at 100% 0%,
+      color-mix(in oklab, var(--color-primary) 22%, transparent),
+      transparent 55%
+    ),
+    var(--color-base-100);
+  background-attachment: fixed;
+  color: var(--color-base-content);
+}
+
+/* ---------- Glass card ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="booknook-light"] .glass {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(10, 17, 40, 0.1);
+  box-shadow: 0 8px 32px rgba(10, 17, 40, 0.12);
+}
+
+/* ---------- Gold button (one style used everywhere) ---------- */
+.btn-gold {
+  background: linear-gradient(135deg, #f3d77a, #d4af37);
+  color: #1a1405;
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
 }
