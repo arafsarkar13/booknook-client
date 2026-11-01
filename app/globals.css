@@ -122,3 +122,24 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
 }
+
+/* ---------- Swiper (home slider) ---------- */
+:root {
+  --swiper-theme-color: var(--color-primary);
+  --swiper-navigation-color: var(--color-primary);
+  --swiper-pagination-bullet-inactive-color: var(--color-base-content);
+  --swiper-pagination-bullet-inactive-opacity: 0.35;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  transform: scale(0.7);
+}
+
+/* Arrows are hidden on phones, where people swipe instead */
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+}
