@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
+    <main className="flex min-h-[60vh] items-center justify-center p-6">
       <section className="glass max-w-xl p-10 text-center">
         <h1 className="text-4xl font-bold text-primary">BookNook</h1>
         <p className="mt-4 opacity-80">
