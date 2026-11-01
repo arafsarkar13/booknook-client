@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -30,7 +31,16 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className="flex min-h-screen flex-col antialiased">
-        <Navbar />
+        {/* Placeholder bar shown for a split second while the navbar loads */}
+        <Suspense
+          fallback={
+            <div className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+              <div className="glass mx-auto h-[68px] max-w-6xl" />
+            </div>
+          }
+        >
+          <Navbar />
+        </Suspense>
         <main className="flex-1 pt-28">{children}</main>
         <Footer />
         <ToastProvider />
