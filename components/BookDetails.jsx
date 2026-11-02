@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
@@ -21,21 +21,38 @@ export default function BookDetails() {
   const [imageFailed, setImageFailed] = useState(false);
   const [borrowing, setBorrowing] = useState(false);
 
-  // Loads the book (also used to refresh the copy count after borrowing)
-  const loadBook = useCallback(async () => {
-    try {
-      setBook(await apiFetch(`/books/${id}`, { auth: true }));
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  // Load the book when the page opens
+  useEffect(() => {
+    let cancelled = false;
+
+    apiFetch(`/books/${id}`, { auth: true })
+      .then((data) => {
+        if (!cancelled) {
+          setBook(data);
+          setError("");
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    // If the visitor leaves the page, ignore the late answer
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
 
-  useEffect(() => {
-    loadBook();
-  }, [loadBook]);
+  // Reload the book after borrowing so the copy count is fresh
+  async function refreshBook() {
+    try {
+      setBook(await apiFetch(`/books/${id}`, { auth: true }));
+    } catch {
+      // If the refresh fails, we simply keep showing the old details
+    }
+  }
 
   // The tab title shows the book name once it is loaded
   useEffect(() => {
@@ -58,10 +75,9 @@ export default function BookDetails() {
       toast.error(err.message);
     } finally {
       setBorrowing(false);
-      loadBook();
+      refreshBook();
     }
   }
-
   if (loading) {
     return <Loader label="Loading book details..." />;
   }
