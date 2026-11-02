@@ -37,19 +37,19 @@ const slides = [
     title: "Your Next Great Read Is One Click Away",
     text: "Explore a growing shelf of fiction, science, history and stories for kids, all shared by readers like you.",
     icon: "read",
-    background: "from-[#1b2a5c]/70 via-transparent to-transparent",
+    background: "from-[#6b3a14]/70 via-transparent to-transparent",
   },
   {
     title: "Share a Book, Spread a Story",
     text: "Add the books you love so other readers can borrow them, and watch your own little library grow.",
     icon: "share",
-    background: "from-[#3a2d0f]/60 via-transparent to-transparent",
+    background: "from-[#7a4a12]/60 via-transparent to-transparent",
   },
   {
     title: "Borrow Today, Return in a Week",
     text: "Every borrowed book comes with a seven day window. Pick one up, enjoy it, and bring it back when you are done.",
     icon: "time",
-    background: "from-[#143a3a]/60 via-transparent to-transparent",
+    background: "from-[#4a2a1a]/70 via-transparent to-transparent",
   },
 ];
 

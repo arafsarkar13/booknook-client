@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ---------- DaisyUI themes: navy + gold ---------- */
+/* ---------- DaisyUI themes: amber + dark brown, with a cream light theme ---------- */
 @plugin "daisyui" {
   themes:
     booknook-dark --default,
@@ -12,18 +12,18 @@
   default: true;
   prefersdark: true;
   color-scheme: dark;
-  --color-base-100: #0a1128;
-  --color-base-200: #0f1a3a;
-  --color-base-300: #16224b;
-  --color-base-content: #f3f1ea;
-  --color-primary: #d4af37;
-  --color-primary-content: #1a1405;
-  --color-secondary: #1b2a5c;
-  --color-secondary-content: #f3f1ea;
-  --color-accent: #f3d77a;
-  --color-accent-content: #1a1405;
-  --color-neutral: #111c3f;
-  --color-neutral-content: #f3f1ea;
+  --color-base-100: #1a110a;
+  --color-base-200: #231710;
+  --color-base-300: #2f2016;
+  --color-base-content: #f5ede3;
+  --color-primary: #e8993e;
+  --color-primary-content: #1c1208;
+  --color-secondary: #3a2616;
+  --color-secondary-content: #f5ede3;
+  --color-accent: #f4b866;
+  --color-accent-content: #1c1208;
+  --color-neutral: #2a1b10;
+  --color-neutral-content: #f5ede3;
   --color-info: #5aa9e6;
   --color-success: #3ecf8e;
   --color-warning: #f5b942;
@@ -37,18 +37,18 @@
 @plugin "daisyui/theme" {
   name: "booknook-light";
   color-scheme: light;
-  --color-base-100: #f7f4ec;
-  --color-base-200: #efe9da;
-  --color-base-300: #e4dcc5;
-  --color-base-content: #0a1128;
-  --color-primary: #b8921f;
+  --color-base-100: #faf4ea;
+  --color-base-200: #f3eadb;
+  --color-base-300: #e8dcc6;
+  --color-base-content: #2a1b10;
+  --color-primary: #b4690f;
   --color-primary-content: #ffffff;
-  --color-secondary: #0a1128;
-  --color-secondary-content: #f7f4ec;
-  --color-accent: #d4af37;
-  --color-accent-content: #1a1405;
-  --color-neutral: #1b2a5c;
-  --color-neutral-content: #f7f4ec;
+  --color-secondary: #3a2616;
+  --color-secondary-content: #faf4ea;
+  --color-accent: #e8993e;
+  --color-accent-content: #1c1208;
+  --color-neutral: #4a2f1b;
+  --color-neutral-content: #faf4ea;
   --color-info: #2f7fc1;
   --color-success: #1f9d68;
   --color-warning: #c98a12;
@@ -103,14 +103,14 @@ body {
 
 [data-theme="booknook-light"] .glass {
   background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(10, 17, 40, 0.1);
-  box-shadow: 0 8px 32px rgba(10, 17, 40, 0.12);
+  border: 1px solid rgba(42, 27, 16, 0.12);
+  box-shadow: 0 8px 32px rgba(42, 27, 16, 0.14);
 }
 
-/* ---------- Gold button (one style used everywhere) ---------- */
+/* ---------- Amber button (one style used everywhere) ---------- */
 .btn-gold {
-  background: linear-gradient(135deg, #f3d77a, #d4af37);
-  color: #1a1405;
+  background: linear-gradient(135deg, #f4b866, #e8993e);
+  color: #1c1208;
   border: 0;
   font-weight: 600;
   cursor: pointer;
@@ -120,7 +120,7 @@ body {
 }
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 24px rgba(232, 153, 62, 0.4);
 }
 
 /* ---------- Swiper (home slider) ---------- */

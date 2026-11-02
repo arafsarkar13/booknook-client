@@ -9,7 +9,7 @@ export default function ToastProvider() {
       toastOptions={{
         duration: 4000,
         style: {
-          background: "rgba(15, 26, 58, 0.92)",
+          background: "rgba(35, 23, 16, 0.94)",
           color: "#f3f1ea",
           border: "1px solid rgba(255, 255, 255, 0.15)",
           backdropFilter: "blur(10px)",
