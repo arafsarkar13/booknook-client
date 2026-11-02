@@ -1,5 +1,11 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import CtaBanner from "./CtaBanner";
+import NewsletterForm from "./NewsletterForm";
+import ScrollToTop from "./ScrollToTop";
+import { SITE } from "@/lib/siteInfo";
+
+const categories = ["Fiction", "Science", "History", "Kids", "Others"];
 
 const socials = [
   {
@@ -24,76 +30,144 @@ const socials = [
   },
 ];
 
+// Heading with the short accent line underneath
+function FooterTitle({ children }) {
+  return (
+    <div className="mb-6">
+      <p
+        role="heading"
+        aria-level={3}
+        className="text-lg font-bold uppercase tracking-wide"
+      >
+        {children}
+      </p>
+      <span className="mt-2 block h-0.5 w-8 bg-primary" />
+    </div>
+  );
+}
+
+// Small line icon for the contact list
+function ContactIcon({ children }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer className="px-4 pb-6 pt-16">
-      <div className="glass mx-auto max-w-6xl px-6 py-10">
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* Brand */}
-          <div>
-            <Logo />
-            <p className="mt-4 max-w-xs text-sm opacity-75">
-              A small online library where you can add a book, borrow a book,
-              and return it when you are done.
-            </p>
-          </div>
+    <>
+      <CtaBanner />
 
-          {/* Quick links */}
-          <div>
-            <h3 className="text-lg font-semibold text-primary">Quick Links</h3>
-            <ul className="mt-4 space-y-2 text-sm opacity-80">
-              <li>
-                <Link href="/" className="hover:text-primary">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/books" className="hover:text-primary">
-                  All Books
-                </Link>
-              </li>
-              <li>
-                <Link href="/add-book" className="hover:text-primary">
-                  Add Book
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact and social */}
-          <div>
-            <h3 className="text-lg font-semibold text-primary">Contact</h3>
-            <ul className="mt-4 space-y-2 text-sm opacity-80">
-              <li>Email: hello@booknook.app</li>
-              <li>Open every day, 24 hours online</li>
-            </ul>
-            <div className="mt-5 flex gap-3">
-              {socials.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.name}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-base-content/20 transition hover:-translate-y-1 hover:border-primary hover:text-primary"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5"
-                    fill="currentColor"
+      <footer className="px-4 pb-6 pt-10">
+        <div className="glass mx-auto max-w-6xl px-6 pt-12 md:px-10">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1.2fr_1.3fr]">
+            {/* Brand */}
+            <div>
+              <Logo />
+              <p className="mt-5 max-w-xs text-sm leading-relaxed opacity-75">
+                A small online library where you can add a book, borrow a book,
+                and return it when you are done.
+              </p>
+              <div className="mt-6 flex gap-3">
+                {socials.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-base-content/20 transition hover:-translate-y-1 hover:border-primary hover:text-primary"
                   >
-                    <path d={social.path} />
-                  </svg>
-                </a>
-              ))}
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5"
+                      fill="currentColor"
+                    >
+                      <path d={social.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div>
+              <FooterTitle>Book Categories</FooterTitle>
+              <ul className="space-y-3 text-sm opacity-80">
+                {categories.map((name) => (
+                  <li key={name}>
+                    <Link
+                      href={`/books?category=${name}`}
+                      className="transition hover:text-primary"
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <FooterTitle>Contact Info</FooterTitle>
+              <ul className="space-y-4 text-sm opacity-80">
+                <li className="flex gap-3">
+                  <ContactIcon>
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="m22 7-10 6L2 7" />
+                  </ContactIcon>
+                  <a
+                    href={`mailto:${SITE.email}`}
+                    className="transition hover:text-primary"
+                  >
+                    {SITE.email}
+                  </a>
+                </li>
+                <li className="flex gap-3">
+                  <ContactIcon>
+                    <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </ContactIcon>
+                  <span>{SITE.location}</span>
+                </li>
+                <li className="flex gap-3">
+                  <ContactIcon>
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" />
+                  </ContactIcon>
+                  <span>{SITE.hours}</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <FooterTitle>Newsletter</FooterTitle>
+              <p className="mb-4 text-sm leading-relaxed opacity-80">
+                Subscribe to hear about new books on the shelf.
+              </p>
+              <NewsletterForm />
             </div>
           </div>
-        </div>
 
-        <p className="mt-10 border-t border-base-content/15 pt-6 text-center text-sm opacity-70">
-          © 2026 BookNook. All rights reserved.
-        </p>
-      </div>
-    </footer>
+          <p className="mt-12 border-t border-base-content/15 py-6 text-center text-sm opacity-70">
+            © 2026 BookNook. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+
+      <ScrollToTop />
+    </>
   );
 }
