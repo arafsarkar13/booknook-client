@@ -103,7 +103,7 @@ export default function Navbar() {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content glass menu z-10 mt-3 w-56 p-3"
+                className="dropdown-content menu z-10 mt-3 w-56 rounded-2xl border border-base-content/15 bg-base-200 p-3 shadow-2xl"
               >
                 <li className="menu-title text-base-content">{user.name}</li>
                 <li>
