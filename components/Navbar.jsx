@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import Logo from "./Logo";
 import { authClient } from "@/lib/auth-client";
-
+import ThemeToggle from "./ThemeToggle";
 const publicLinks = [
   { label: "Home", href: "/" },
   { label: "All Books", href: "/books" },
@@ -79,6 +79,7 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           {isPending ? (
             // Still checking the session: show a placeholder
             <div className="h-10 w-28 animate-pulse rounded-full bg-base-content/10" />
