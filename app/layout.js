@@ -22,6 +22,16 @@ export const metadata = {
   description: "Add a book, borrow a book, return a book.",
 };
 
+// Runs before the page is drawn, so there is no flash of the wrong theme
+const themeScript = `
+  try {
+    var saved = localStorage.getItem("booknook-theme");
+    if (saved === "booknook-light" || saved === "booknook-dark") {
+      document.documentElement.setAttribute("data-theme", saved);
+    }
+  } catch (error) {}
+`;
+
 export default function RootLayout({ children }) {
   return (
     <html
@@ -30,6 +40,9 @@ export default function RootLayout({ children }) {
       className={`${playfair.variable} ${inter.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-screen flex-col antialiased">
         {/* Placeholder bar shown for a split second while the navbar loads */}
         <Suspense
