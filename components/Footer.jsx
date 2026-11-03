@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import CtaBanner from "./CtaBanner";
+import LiveClock from "./LiveClock";
 import NewsletterForm from "./NewsletterForm";
 import ScrollToTop from "./ScrollToTop";
 import { SITE } from "@/lib/siteInfo";
@@ -67,9 +67,7 @@ function ContactIcon({ children }) {
 export default function Footer() {
   return (
     <>
-      <CtaBanner />
-
-      <footer className="px-4 pb-6 pt-10">
+      <footer className="px-4 pb-6 pt-16">
         <div className="glass mx-auto max-w-6xl px-6 pt-12 md:px-10">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1.2fr_1.3fr]">
             {/* Brand */}
@@ -161,9 +159,10 @@ export default function Footer() {
             </div>
           </div>
 
-          <p className="mt-12 border-t border-base-content/15 py-6 text-center text-sm opacity-70">
-            © 2026 BookNook. All Rights Reserved.
-          </p>
+          <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-base-content/15 py-6 text-center text-sm opacity-70 md:flex-row md:text-left">
+            <p>© 2026 BookNook. All Rights Reserved.</p>
+            <LiveClock />
+          </div>
         </div>
       </footer>
 

@@ -6,7 +6,7 @@ import { SITE } from "@/lib/siteInfo";
 
 export default function CtaBanner() {
   return (
-    <section className="px-4 pt-16">
+    <section className="px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
