@@ -3,6 +3,7 @@ import HeroSlider from "@/components/HeroSlider";
 import NewArrivals from "@/components/NewArrivals";
 import HowItWorks from "@/components/HowItWorks";
 import TopCategories from "@/components/TopCategories";
+import CtaBanner from "@/components/CtaBanner";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <NewArrivals />
       <HowItWorks />
       <TopCategories />
+      <CtaBanner />
     </div>
   );
 }
