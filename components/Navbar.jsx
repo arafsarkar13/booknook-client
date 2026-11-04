@@ -39,6 +39,18 @@ export default function Navbar() {
         : "hover:bg-base-content/10"
     }`;
 
+  // Login / Register buttons: the one for the current page turns gold
+  const authClass = (href) =>
+    `rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+      pathname === href ? "btn-gold" : "hover:bg-base-content/10"
+    }`;
+
+  // Mobile menu version of the same idea
+  const mobileAuthClass = (href) =>
+    `flex-1 rounded-full py-2 text-center text-sm font-medium ${
+      pathname === href ? "btn-gold" : "border border-base-content/20"
+    }`;
+
   // Close the avatar dropdown after choosing an item
   function closeDropdown() {
     document.activeElement?.blur();
@@ -122,16 +134,10 @@ export default function Navbar() {
           ) : (
             // Logged out: Login and Register
             <div className="hidden items-center gap-2 sm:flex">
-              <Link
-                href="/login"
-                className="rounded-full px-4 py-2 text-sm font-medium hover:bg-base-content/10"
-              >
+              <Link href="/login" className={authClass("/login")}>
                 Login
               </Link>
-              <Link
-                href="/register"
-                className="btn-gold rounded-full px-5 py-2 text-sm"
-              >
+              <Link href="/register" className={authClass("/register")}>
                 Register
               </Link>
             </div>
@@ -190,14 +196,14 @@ export default function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setOpen(false)}
-                  className="flex-1 rounded-full border border-base-content/20 py-2 text-center text-sm font-medium"
+                  className={mobileAuthClass("/login")}
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setOpen(false)}
-                  className="btn-gold flex-1 rounded-full py-2 text-center text-sm"
+                  className={mobileAuthClass("/register")}
                 >
                   Register
                 </Link>
