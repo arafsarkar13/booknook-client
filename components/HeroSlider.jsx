@@ -1,59 +1,35 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// Three simple line icons, one per slide
-const icons = {
-  read: (
-    <>
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-    </>
-  ),
-  share: (
-    <>
-      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
-      <path d="M9 10h6" />
-      <path d="M12 7v6" />
-    </>
-  ),
-  time: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v5l3 2" />
-    </>
-  ),
-};
+// How long each picture stays before sliding to the next one (in milliseconds)
+const SLIDE_DELAY = 3500;
 
 const slides = [
   {
+    image: "/hero/hero-1.jpg",
     title: "Your Next Great Read Is One Click Away",
     text: "Explore a growing shelf of fiction, science, history and stories for kids, all shared by readers like you.",
-    icon: "read",
-    background: "from-[#6b3a14]/70 via-transparent to-transparent",
   },
   {
+    image: "/hero/hero-2.jpg",
     title: "Share a Book, Spread a Story",
     text: "Add the books you love so other readers can borrow them, and watch your own little library grow.",
-    icon: "share",
-    background: "from-[#7a4a12]/60 via-transparent to-transparent",
   },
   {
+    image: "/hero/hero-3.jpg",
     title: "Borrow Today, Return in a Week",
     text: "Every borrowed book comes with a seven day window. Pick one up, enjoy it, and bring it back when you are done.",
-    icon: "time",
-    background: "from-[#4a2a1a]/70 via-transparent to-transparent",
   },
 ];
 
-// Text appears one piece at a time when a slide becomes active
+// Text appears one piece at a time when its slide is showing
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
@@ -64,50 +40,73 @@ const item = {
 };
 
 export default function HeroSlider() {
+  const [active, setActive] = useState(0);
+
   return (
-    <section className="mx-auto max-w-6xl px-4">
+    <section aria-label="Welcome to BookNook">
       <Swiper
-        modules={[Autoplay, EffectFade, Navigation, Pagination]}
-        effect="fade"
-        fadeEffect={{ crossFade: true }}
+        modules={[Autoplay, Pagination]}
         loop
-        speed={800}
+        speed={700}
+        grabCursor
         autoplay={{
-          delay: 5500,
+          delay: SLIDE_DELAY,
           disableOnInteraction: false,
-          pauseOnMouseEnter: true,
+          pauseOnMouseEnter: false,
         }}
-        navigation
         pagination={{ clickable: true }}
-        className="glass overflow-hidden"
+        onSlideChange={(swiper) => setActive(swiper.realIndex)}
+        // Clicking the picture goes to the next slide, but not the button or the dots
+        onClick={(swiper, event) => {
+          if (event.target.closest?.("a, .swiper-pagination")) return;
+          swiper.slideNext();
+        }}
+        // White dots, because the hero is always a photo
+        style={{
+          "--swiper-pagination-bullet-inactive-color": "#ffffff",
+          "--swiper-pagination-bullet-inactive-opacity": "0.5",
+        }}
+        className="w-full"
       >
-        {slides.map((slide) => (
+        {slides.map((slide, index) => (
           <SwiperSlide key={slide.title}>
-            {({ isActive }) => (
+            <div
+              className="relative flex min-h-[540px] items-center md:min-h-[620px]"
+              // If a photo is missing, this warm gradient shows instead
+              style={{
+                backgroundImage: "linear-gradient(135deg, #3a2616, #1a110a)",
+              }}
+            >
+              {/* The photo */}
               <div
-                className={`flex min-h-[460px] items-center bg-gradient-to-br ${slide.background} px-8 py-16 md:min-h-[520px] md:px-16`}
-              >
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              />
+              {/* Lighter overlay: dark behind the text on the left, clear on the right */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/5" />
+
+              <div className="relative mx-auto w-full max-w-6xl px-4 pb-20 pt-32">
                 <motion.div
                   variants={container}
                   initial="hidden"
-                  animate={isActive ? "show" : "hidden"}
-                  className="max-w-xl"
+                  animate={active === index ? "show" : "hidden"}
+                  className="max-w-xl text-white"
                 >
                   <motion.p
                     variants={item}
-                    className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-primary"
+                    className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-accent"
                   >
                     Welcome to BookNook
                   </motion.p>
                   <motion.h2
                     variants={item}
-                    className="text-4xl font-bold leading-tight md:text-5xl"
+                    className="text-4xl font-bold leading-tight md:text-6xl"
                   >
                     {slide.title}
                   </motion.h2>
                   <motion.p
                     variants={item}
-                    className="mt-5 text-base leading-relaxed opacity-80 md:text-lg"
+                    className="mt-5 text-base leading-relaxed text-white/85 md:text-lg"
                   >
                     {slide.text}
                   </motion.p>
@@ -120,32 +119,8 @@ export default function HeroSlider() {
                     </Link>
                   </motion.div>
                 </motion.div>
-
-                {/* Floating icon, shown from tablet size up */}
-                <motion.div
-                  animate={{ y: [0, -16, 0] }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="ml-auto hidden h-56 w-56 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 md:flex"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-28 w-28 text-primary"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    {icons[slide.icon]}
-                  </svg>
-                </motion.div>
               </div>
-            )}
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
