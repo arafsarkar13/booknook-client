@@ -5,7 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function BookCard({ book, index = 0 }) {
-  // If the image link is broken, we show a gold book icon instead
+  // If the image link is broken, show a book icon instead
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
@@ -15,10 +15,10 @@ export default function BookCard({ book, index = 0 }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
       whileHover={{ y: -8 }}
-      className="glass flex h-full flex-col overflow-hidden"
+      className="glass group flex h-full flex-col overflow-hidden"
     >
-      {/* Every image box has the same size */}
-      <div className="relative h-72 w-full overflow-hidden bg-base-300/50">
+      {/* Every cover has the same shape */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-base-300/50">
         {imageFailed || !book.image ? (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary to-base-200">
             <svg
@@ -39,23 +39,23 @@ export default function BookCard({ book, index = 0 }) {
           <img
             src={book.image}
             alt={`Cover of ${book.title}`}
-            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             onError={() => setImageFailed(true)}
           />
         )}
-        <span className="absolute left-3 top-3 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-content">
-          {book.category}
-        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="line-clamp-2 min-h-[3.5rem] text-xl font-bold">
+        <span className="w-fit rounded-full bg-base-content/10 px-3 py-1 text-xs font-medium">
+          {book.category}
+        </span>
+        <h3
+          title={book.title}
+          className="mt-3 line-clamp-2 min-h-[3.5rem] text-xl font-bold leading-snug"
+        >
           {book.title}
         </h3>
         <p className="mt-1 text-sm opacity-75">by {book.author}</p>
-        <p className="mt-1 text-xs uppercase tracking-wider text-primary">
-          {book.category}
-        </p>
 
         <div className="mt-auto pt-5">
           <Link
