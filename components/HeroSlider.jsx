@@ -9,8 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // How long each picture stays before sliding to the next one (in milliseconds)
-const SLIDE_DELAY = 3500;
-
+const SLIDE_DELAY = 5000 * 5;
 const slides = [
   {
     image: "/hero/hero-1.jpg",
