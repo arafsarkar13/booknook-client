@@ -118,7 +118,7 @@ export default function AllBooks() {
             Showing {visibleBooks.length}{" "}
             {visibleBooks.length === 1 ? "book" : "books"}
           </p>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-3">
             {visibleBooks.map((book, index) => (
               <BookCard key={book._id} book={book} index={index} />
             ))}
